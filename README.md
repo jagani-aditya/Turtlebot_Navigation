@@ -14,7 +14,7 @@ To Simulate it yourself:
 
 You should see gazebo getting launched. The robot shall by default spawn at x: -1 y:-2 and navigate to goal position: x: 10 y: 10
 In order to change the goal positions ->  cd <your_ros_workspace>/src/Turtlebot_Navigation/robot_simulation/scripts
-Open navigate_vector.py and change the 'x_goal' 'y_goal' values
+Open navigate_vector.py and change the 'x_goal' 'y_goal' values in the def __init__(self) function
 
 
 
