@@ -1,0 +1,41 @@
+<launch>
+
+<arg name="verbose" default="true"/>
+<arg name="debug" default="false" />
+<arg name="gui" default="true" />
+<arg name="pause" default="false" />
+<arg name="world" default="$(find robot_simulation)/maps/sandbox_map.world" />    
+       
+<include file="$(find gazebo_ros)/launch/empty_world.launch">
+	<arg name="world_name" value="$(arg world)" />
+	<arg name="debug" value="$(arg debug)" />
+	<arg name="gui" value="$(arg gui)" />
+	<arg name="paused" value="$(arg pause)" />
+	<arg name="use_sim_time" value="true" />
+</include>
+
+
+<!-- Load the URDF into the ROS Parameter Server -->
+
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find turtlebot)/urdf/turtlebot3_burger.urdf.xacro'" />
+
+<!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+
+	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	args="-urdf -model robot -param robot_description -x -2 -y -1 "/>
+
+
+	<!--           CHANGE OBSTACLE LOCATIONS FROM HERE                 -->
+
+	<param name="obstacle_description_1" command="$(find xacro)/xacro.py '$(find robot_simulation)/urdf/obstacles.urdf'" />
+	<param name="obstacle_description_2" command="$(find xacro)/xacro.py '$(find robot_simulation)/urdf/obstacles.urdf'" />
+   	
+    <!-- push obstacle_description to world in gazebo -->
+    <!--node name="spawn_obstacle_1" pkg="gazebo_ros" type="spawn_model" args="-urdf -param obstacle_description_1 -x 3 -y 3 -z 0.01 -model model_1" respawn="false" output="screen" />
+    <node name="spawn_obstacle_2" pkg="gazebo_ros" type="spawn_model" args="-urdf -param obstacle_description_2 -x 5 - y 2 -z 0.01 -model model_2" respawn="false" output="screen" /-->
+    
+
+	<!--Launch the python script that contains the main navigation program -->
+	<node name="go_goal" pkg="robot_simulation" type="navigate_vector.py" output="screen"/>
+  
+</launch>
