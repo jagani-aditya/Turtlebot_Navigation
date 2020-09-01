@@ -5,8 +5,8 @@ Result: The turtlebot is successfully able to go to the desired position in spac
 
 To Simulate it yourself:
 
-1. Clone the repository in your workspace: git clone https://github.com/jagani-aditya/Turtlebot_Navigation.git
-2. cd <your_ros_workspace> 
+1. Clone the repository in 'src' folder of your workspace: git clone https://github.com/jagani-aditya/Turtlebot_Navigation.git
+2. Go back to <your_ros_workspace> using 'cd ..' 
 3. catkin_make
 4. source devel/setup.bash
 5. roslaunch robot_simulation robot_gazebo.launch
